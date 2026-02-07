@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Will You Be My Valentine?</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config (animasi custom) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            bounceSlow: "bounce 2s infinite",
+            shake: "shake 0.4s ease-in-out"
+          },
+          keyframes: {
+            shake: {
+              "0%,100%": { transform: "translateX(0)" },
+              "25%": { transform: "translateX(-5px)" },
+              "75%": { transform: "translateX(5px)" }
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-pink-100 to-red-200">
+
+<!-- ================================================= -->
+<!-- CONTAINER -->
+<!-- ================================================= -->
+<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full text-center">
+
+  <!-- Title -->
+  <h1 class="text-3xl font-extrabold text-red-500 mb-4 animate-bounceSlow">
+    Will you be my Valentine? ❤️
+  </h1>
+
+  <p class="text-gray-600 mb-6">
+    Be honest… I can take it 😌
+  </p>
+
+  <!-- Buttons -->
+  <div class="relative h-24 flex items-center justify-center gap-4">
+
+    <!-- YES BUTTON -->
+    <button
+      id="yesBtn"
+      class="bg-green-500 text-white font-bold
+             px-6 py-3 rounded-xl text-xl
+             transition transform"
+    >
+      Yes 💖
+    </button>
+
+    <!-- NO BUTTON -->
+    <button
+      id="noBtn"
+      class="bg-red-500 text-white font-bold
+             px-6 py-3 rounded-xl text-xl
+             absolute right-4 transition"
+    >
+      No 😭
+    </button>
+
+  </div>
+
+  <!-- GIF -->
+  <img
+    class="mt-6 rounded-xl mx-auto"
+    src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif"
+    alt="Cute gif"
+  />
+
+</div>
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+<script>
+  /*
+  =====================================
+  1. AMBIL ELEMEN DARI HTML
+  =====================================
+  */
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn  = document.getElementById("noBtn");
+
+  /*
+  =====================================
+  2. DATA (ARRAY)
+  =====================================
+  */
+  const messages = [
+    "Are you sure?",
+    "Really sure??",
+    "Think again 🥺",
+    "This hurts 💔",
+    "I’m shaking rn 😭",
+    "Okay stop 😩",
+    "Say yes please ❤️"
+  ];
+
+  let index = 0;
+
+  /*
+  =====================================
+  3. EVENT: NO BUTTON DIKLIK
+  =====================================
+  */
+  noBtn.addEventListener("click", () => {
+
+    // Ganti teks tombol NO
+    noBtn.textContent = messages[index];
+    index = (index + 1) % messages.length;
+
+    // YES makin gede
+    const size = parseFloat(
+      window.getComputedStyle(yesBtn).fontSize
+    );
+    yesBtn.style.fontSize = size * 1.3 + "px";
+
+    // Animasi shake
+    noBtn.classList.remove("animate-shake");
+    void noBtn.offsetWidth; // reset animation
+    noBtn.classList.add("animate-shake");
+  });
+
+  /*
+  =====================================
+  4. EVENT: NO BUTTON KABUR
+  =====================================
+  */
+  noBtn.addEventListener("mouseenter", () => {
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 120 - 60;
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  /*
+  =====================================
+  5. EVENT: YES BUTTON
+  =====================================
+  */
+  yesBtn.addEventListener("click", () => {
+
+    // GANTI NOMOR WHATSAPP DI SINI 👇
+    const phone = "6281234567890";
+    const text  = "I said YES ❤️ Happy Valentine!";
+    
+    window.location.href =
+      `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  });
+</script>
+
+</body>
+</html>
